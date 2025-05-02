@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -88,13 +89,9 @@
 </head>
 <body>
 
-<!-- 🎵 Fon müziği -->
-<audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/28/audio_c4aa8d06ef.mp3?filename=fun-adventure-113997.mp3"></audio>
+<!-- Fon müziği -->
+<audio id="bgMusic" src="https://muesalmy.github.io/aslan-3tavsan/kids-game-gaming-background-music-295075.mp3"></audio>
 
-<!-- 💋 Öpücük sesi -->
-<audio id="kissSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_b7dc93a5f4.mp3?filename=smooch-1-46162.mp3"></audio>
-
-<!-- 🎮 Oyun Elemanları -->
 <canvas id="gameCanvas"></canvas>
 <div id="gameOverMessage">💔 Eyvah! Aslan tavşanı yemiş!</div>
 <div id="timer">⏱ 0 saniye</div>
@@ -106,7 +103,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const kissSound = document.getElementById("kissSound");
 const bgMusic = document.getElementById("bgMusic");
 const gameOverMessage = document.getElementById("gameOverMessage");
 const timerDisplay = document.getElementById("timer");
@@ -213,7 +209,6 @@ musicToggle.addEventListener("click", () => {
 startButton.addEventListener("click", () => {
   startButton.style.display = "none";
   bgMusic.play().catch(() => {});
-  kissSound.play().then(() => kissSound.pause()).catch(() => {});
   initializeGame();
 });
 
@@ -227,7 +222,6 @@ function gameLoop() {
   if (checkCollision()) {
     isGameOver = true;
     addHeart();
-    kissSound.play();
     gameOverMessage.style.display = "block";
     restartButton.style.display = "block";
     clearInterval(timerInterval);
