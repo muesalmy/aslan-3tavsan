@@ -58,27 +58,48 @@
       border: 2px solid #000;
       border-radius: 5px;
     }
+
+    #musicToggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 16px;
+      padding: 5px 10px;
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+
+<!-- 🎵 Fon müziği -->
+<audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/28/audio_c4aa8d06ef.mp3?filename=fun-adventure-113997.mp3" autoplay loop></audio>
+
+<!-- 💋 Öpücük sesi -->
+<audio id="kissSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_b7dc93a5f4.mp3?filename=smooch-1-46162.mp3"></audio>
+
 <canvas id="gameCanvas"></canvas>
 <div id="gameOverMessage">💔 Eyvah! Aslan tavşanı yemiş!</div>
 <div id="timer">⏱ 0 saniye</div>
 <button id="restartButton">🔁 Yeniden Başla</button>
-
-<!-- Yeni öpücük sesi -->
-<audio id="kissSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_b7dc93a5f4.mp3?filename=smooch-1-46162.mp3"></audio>
+<button id="musicToggle">🔇 Müzik Kapat</button>
 
 <script>
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+
 const kissSound = document.getElementById("kissSound");
+const bgMusic = document.getElementById("bgMusic");
 const gameOverMessage = document.getElementById("gameOverMessage");
 const timerDisplay = document.getElementById("timer");
 const restartButton = document.getElementById("restartButton");
+const musicToggle = document.getElementById("musicToggle");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+bgMusic.volume = 0.2; // düşük ses
 
 let nazli, enes, hearts, isGameOver, startTime, timerInterval;
 
@@ -160,6 +181,16 @@ window.addEventListener("keyup", e => keys[e.key] = false);
 
 restartButton.addEventListener("click", () => {
   initializeGame();
+});
+
+musicToggle.addEventListener("click", () => {
+  if (bgMusic.paused) {
+    bgMusic.play();
+    musicToggle.textContent = "🔇 Müzik Kapat";
+  } else {
+    bgMusic.pause();
+    musicToggle.textContent = "🔊 Müzik Aç";
+  }
 });
 
 function gameLoop() {
