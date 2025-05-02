@@ -22,32 +22,32 @@
       background-color: transparent;
     }
 
-    #gameOverMessage {
+    #gameOverMessage, #timer, #restartButton, #musicToggle, #startButton {
       position: absolute;
+      z-index: 10;
+      font-family: sans-serif;
+    }
+
+    #gameOverMessage {
       top: 30%;
       width: 100%;
       text-align: center;
       font-size: 40px;
-      font-family: sans-serif;
       color: red;
       font-weight: bold;
       display: none;
     }
 
     #timer {
-      position: absolute;
       top: 10px;
       left: 10px;
       font-size: 24px;
-      font-family: sans-serif;
-      color: black;
       background-color: rgba(255,255,255,0.7);
       padding: 5px 10px;
       border-radius: 5px;
     }
 
     #restartButton {
-      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -61,7 +61,6 @@
     }
 
     #musicToggle {
-      position: absolute;
       top: 10px;
       right: 10px;
       font-size: 16px;
@@ -73,7 +72,6 @@
     }
 
     #startButton {
-      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -83,13 +81,34 @@
       border: 2px solid black;
       border-radius: 8px;
       cursor: pointer;
-      z-index: 10;
+    }
+
+    /* Mobil kontrol butonları */
+    .mobile-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 11;
+    }
+
+    .mobile-button {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      text-align: center;
+      line-height: 60px;
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 50%;
+      user-select: none;
     }
   </style>
 </head>
 <body>
 
-<!-- Fon müziği -->
 <audio id="bgMusic" src="https://muesalmy.github.io/aslan-3tavsan/kids-game-gaming-background-music-295075.mp3"></audio>
 
 <canvas id="gameCanvas"></canvas>
@@ -98,6 +117,14 @@
 <button id="restartButton">🔁 Yeniden Başla</button>
 <button id="musicToggle">🔇 Müzik Kapat</button>
 <button id="startButton">▶️ Oyunu Başlat</button>
+
+<!-- Mobil kontrol butonları -->
+<div class="mobile-controls">
+  <div class="mobile-button" id="leftBtn">◀</div>
+  <div class="mobile-button" id="upBtn">▲</div>
+  <div class="mobile-button" id="downBtn">▼</div>
+  <div class="mobile-button" id="rightBtn">▶</div>
+</div>
 
 <script>
 const canvas = document.getElementById("gameCanvas");
@@ -211,6 +238,17 @@ startButton.addEventListener("click", () => {
   bgMusic.play().catch(() => {});
   initializeGame();
 });
+
+// Mobil kontrol olayları
+document.getElementById("upBtn").addEventListener("touchstart", () => keys["ArrowUp"] = true);
+document.getElementById("downBtn").addEventListener("touchstart", () => keys["ArrowDown"] = true);
+document.getElementById("leftBtn").addEventListener("touchstart", () => keys["ArrowLeft"] = true);
+document.getElementById("rightBtn").addEventListener("touchstart", () => keys["ArrowRight"] = true);
+
+document.getElementById("upBtn").addEventListener("touchend", () => keys["ArrowUp"] = false);
+document.getElementById("downBtn").addEventListener("touchend", () => keys["ArrowDown"] = false);
+document.getElementById("leftBtn").addEventListener("touchend", () => keys["ArrowLeft"] = false);
+document.getElementById("rightBtn").addEventListener("touchend", () => keys["ArrowRight"] = false);
 
 function gameLoop() {
   if (isGameOver) return;
